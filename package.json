@@ -1,0 +1,22 @@
+{
+  "name": "ibft-setup-tools",
+  "version": "1.0.0",
+  "description": "The tools required to launch an Istanbul network",
+  "main": "generateprivatekey.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clearmatics/ibft-setup-tools.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/clearmatics/ibft-setup-tools/issues"
+  },
+  "homepage": "https://github.com/clearmatics/ibft-setup-tools#readme",
+  "dependencies": {
+    "keythereum": "^1.0.4"
+  }
+}
