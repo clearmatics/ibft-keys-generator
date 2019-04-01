@@ -2,15 +2,12 @@ FROM node:10.15.3-alpine
 
 ENV NODE_VERSION 10.15.3
 
-RUN apk add bash bind-tools python g++ make --no-cache
-
 RUN apk add --no-cache \
     bash \
     bind-tools \
     g++ \
     make \
     python \
-    python3 \
     python-dev \
     py-pip \
     build-base \
@@ -30,5 +27,6 @@ COPY ./cm_writer /cm_writer
 
 ADD entrypoint.sh /
 
-ENTRYPOINT ["/entrypoint.sh"]
+WORKDIR /
+ENTRYPOINT ["./entrypoint.sh"]
 CMD []
