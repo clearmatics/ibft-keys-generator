@@ -22,7 +22,7 @@ def write_to_cm_pass():
 def main():
 
     # it works only if this script is run by K8s as a POD
-    #config.load_incluster_config()
+    config.load_incluster_config()
     write_to_cm_pass()
 
 
