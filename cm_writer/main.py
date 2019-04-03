@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import base64
 from kubernetes.client.rest import ApiException
 from kubernetes import client, config
 from pprint import pprint
@@ -8,8 +9,8 @@ def write_to_cm_pass():
     api_instance = client.CoreV1Api()
 
     sec = client.V1Secret()
-    sec.type = "Opaque"
-    sec.data = {"username": "TestUser", "password": "TestPass"}
+    sec.type = 'Opaque'
+    sec.data = {'username': base64.b64encode('TestUser'), 'password': base64.b64encode('TestPass')}
     name = 'account-pwd'
     namespace = 'testnewautonity'
     body = sec
