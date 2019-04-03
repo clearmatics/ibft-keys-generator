@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
+from kubernetes.client.rest import ApiException
 from kubernetes import client, config
+from pprint import pprint
 
 def write_to_cm_pass():
     api_instance = client.CoreV1Api()
