@@ -28,6 +28,7 @@ def main():
     for i in ret.items:
         print("%s\t%s\t%s" %
               (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
+    write_to_cm_pass()
 
 
 if __name__ == '__main__':
