@@ -5,15 +5,12 @@ import argparse
 import secrets
 import string
 import sha3
-from kubernetes.client.rest import ApiException
 from kubernetes import client, config
-from pprint import pprint
 from ecdsa import SigningKey, SECP256k1
 
 
 def write_account_pass(namespace):
     # Generate password for account and write it to k8s secret
-
     api_instance = client.CoreV1Api()
 
     alphabet = string.ascii_letters + string.digits + string.punctuation
@@ -24,14 +21,10 @@ def write_account_pass(namespace):
     sec.data = {'account.pwd': base64.b64encode(password.encode()).decode()}
     name = 'account-pwd'
     body = sec
-    try:
-        api_response = api_instance.patch_namespaced_secret(name, namespace, body)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when write to secret: %s\n" % e)
+    api_instance.patch_namespaced_secret(name, namespace, body)
 
 
-def checksum_encode(addr_str): # Takes a hex (string) address as input
+def checksum_encode(addr_str):
     keccak = sha3.keccak_256()
     out = ''
     addr = addr_str.lower().replace('0x', '')
@@ -72,22 +65,12 @@ def write_keys(peers, kind, namespace):
         payload_cmap[str(peer['id']) + '.pub_key'] = peer['pub_key']
     sec.data = payload_sec
     cmap.data = payload_cmap
-
-    try:
-        api_response = api_instance.patch_namespaced_secret(kind, namespace, sec)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when write to secret: %s\n" % e)
-
-    try:
-        api_response = api_instance.patch_namespaced_config_map(kind, namespace, cmap)
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when write to ConfigMap: %s\n" % e)
+    api_instance.patch_namespaced_secret(kind, namespace, sec)
+    api_instance.patch_namespaced_config_map(kind, namespace, cmap)
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Generate set of keys for initialisation networks and deploy it to kubernetes secrets')
+    parser = argparse.ArgumentParser(description='Generate set of keys for initialisation networks and deploy it to kubernetes etcd')
     parser.add_argument('-k',
                         dest='kubeconf_type',
                         default='pod',
@@ -112,7 +95,6 @@ def main():
                         help='number of observers minimum 1 (default: %(default)s)'
                         )
     args = parser.parse_args()
-    pprint(vars(args))
 
     if args.kubeconf_type == 'pod':
         config.load_incluster_config()
@@ -124,13 +106,14 @@ def main():
         namespace = args.namespace
 
     write_account_pass(namespace)
+    print('INFO: Account password was generated to the k8s secret')
 
     validators = []
     for i in range(args.validators):
         validator = generate_keys()
         validator['id'] = i
         validators.append(validator)
-        print(validator)
+        print('INFO: validator: ' + str(i) + ' address: ' + validator['address'] + ' public_key: ' + validator['pub_key'])
     write_keys(validators, 'validators', namespace)
 
     observers = []
@@ -138,8 +121,9 @@ def main():
         observer = generate_keys()
         observer['id'] = i
         observers.append(observer)
-        print(observer)
+        print('INFO: observer: ' + str(i) + ' address: ' + observer['address'] + ' public_key: ' + observer['pub_key'])
     write_keys(observers, 'observers', namespace)
+    print('INFO: Successfully ended')
 
 
 if __name__ == '__main__':
