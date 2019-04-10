@@ -58,17 +58,32 @@ def generate_keys():
 
 def write_keys(peers, kind, namespace):
     api_instance = client.CoreV1Api()
+
     sec = client.V1Secret()
     sec.type = 'Opaque'
-    payload = {}
+
+    cmap = client.V1ConfigMap()
+
+    payload_sec = {}
+    payload_cmap = {}
     for peer in peers:
-        payload[peer['id']] = base64.b64encode(peer['private_key'].encode()).decode()
-    sec.data = payload
+        payload_sec[str(peer['id']) + '.private_key'] = base64.b64encode(peer['private_key'].encode()).decode()
+        payload_cmap[str(peer['id']) + '.address'] = peer['address']
+        payload_cmap[str(peer['id']) + '.pub_key'] = peer['pub_key']
+    sec.data = payload_sec
+    cmap.data = payload_cmap
+
     try:
         api_response = api_instance.patch_namespaced_secret(kind, namespace, sec)
         pprint(api_response)
     except ApiException as e:
         print("Exception when write to secret: %s\n" % e)
+
+    try:
+        api_response = api_instance.patch_namespaced_config_map(kind, namespace, cmap)
+        pprint(api_response)
+    except ApiException as e:
+        print("Exception when write to ConfigMap: %s\n" % e)
 
 
 def main():
