@@ -39,6 +39,7 @@ def checksum_encode(addr_str):
 
 
 def generate_keys():
+    # Based on https://github.com/vkobel/ethereum-generate-wallet/blob/master/ethereum-wallet-generator.py
     keccak = sha3.keccak_256()
 
     priv = SigningKey.generate(curve=SECP256k1)

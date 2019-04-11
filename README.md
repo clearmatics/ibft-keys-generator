@@ -27,7 +27,7 @@ Run and connect to remote kubernetes cluster using default local kube config
 
 Run and connect to kube-apiserver from internal pod (inside kubernetes cluster)
 ```
-docker run -ti ibft-keys-generator
+docker run -ti clearmatics/ibft-keys-generator
 ```
 
 # Options
