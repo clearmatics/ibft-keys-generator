@@ -55,13 +55,13 @@ optional arguments:
 
 ```bash
 NAMESPACE=test
-kubectl -n $NAMESPACE get secrets account-pwd -o 'go-template={{ "{{" }}index .data "account.pwd"{{ "}}" }}' | base64 --decode; echo ""
+kubectl -n $NAMESPACE get secrets account-pwd -o 'go-template={{index .data "account.pwd"}}' | base64 --decode; echo ""
 ```
 Get private key of first observer (id == 0)
 
 ```bash
 NAMESPACE=test
-kubectl -n $NAMESPACE get secrets observers -o 'go-template={{ "{{" }}index .data "0.private_key"{{ "}}" }}' | base64 --decode; echo ""
+kubectl -n $NAMESPACE get secrets observers -o 'go-template={{index .data "0.private_key"}}' | base64 --decode; echo ""
 ```
 
 Get list of addresses for each validator
