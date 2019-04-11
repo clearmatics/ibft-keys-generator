@@ -3,7 +3,7 @@ Generate set of validators and observers keys for IBFT:
 - account password
 - for each validator and observer: `private key`, `public key`, `address`
 
-Data will be added to existed secrets and ConfigMaps:
+Data will be added to existing secrets and ConfigMaps:
 
 
 | type      | name                  | keys                     |
@@ -35,7 +35,7 @@ docker run -ti clearmatics/ibft-keys-generator
 usage: main.py [-h] [-k {pod,remote}] [-n NAMESPACE] [--validators VALIDATORS]
                [--observers OBSERVERS]
 
-Generate set of keys for initialisation networks and deploy it to kubernetes
+Generate set of keys for initialising the network and deploy it to kubernetes
 etcd
 
 optional arguments:
@@ -51,7 +51,7 @@ optional arguments:
 ```
 
 
-# Get secret from configmap
+# Get secret from ConfigMap
 
 ```bash
 NAMESPACE=test

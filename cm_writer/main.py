@@ -71,7 +71,7 @@ def write_keys(peers, kind, namespace):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Generate set of keys for initialisation networks and deploy it to kubernetes etcd')
+    parser = argparse.ArgumentParser(description='Generate set of keys for initialising the network and deploy it to kubernetes etcd')
     parser.add_argument('-k',
                         dest='kubeconf_type',
                         default='pod',
