@@ -3,6 +3,10 @@ Generate set of validators and observers keys for IBFT:
 - account password
 - for each validator and observer: `private key`, `public key`, `address`
 
+## External Dependencies
+- docker 18.09.2  
+- kube-apiserver v1.11.8
+
 Data will be added to existing secrets and ConfigMaps:
 
 
