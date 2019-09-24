@@ -13,8 +13,8 @@ Data will be added to existing secrets and ConfigMaps:
 | type      | name                  | keys                     |
 |-----------|-----------------------|--------------------------|
 | secret    | account-pwd           | `account.pwd`            |
-| secret    | validators, observers, operator-governance, operator-treasure | `*.private_key`          | 
-| ConfigMap | validators, observers, operator-governance, operator-treasure | `*.pub_key`, `*.address` | 
+| secret    | validators, observers, operator-governance, operator-treasury | `*.private_key`          | 
+| ConfigMap | validators, observers, operator-governance, operator-treasury | `*.pub_key`, `*.address` | 
 
 
 # Build

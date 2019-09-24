@@ -130,10 +130,10 @@ def main():
     print('INFO: operator-governance: address: ' + operator_governance['address'] + ' public_key: ' + operator_governance['pub_key'])
     write_keys([operator_governance], 'operator-governance', namespace)
 
-    operator_treasure = generate_keys()
-    operator_treasure['id'] = 0
-    print('INFO: operator-treasure: address: ' + operator_treasure['address'] + ' public_key: ' + operator_treasure['pub_key'])
-    write_keys([operator_treasure], 'operator-treasure', namespace)
+    operator_treasury = generate_keys()
+    operator_treasury['id'] = 0
+    print('INFO: operator-treasury: address: ' + operator_treasury['address'] + ' public_key: ' + operator_treasury['pub_key'])
+    write_keys([operator_treasury], 'operator-treasury', namespace)
 
     print('INFO: Successfully ended')
 
